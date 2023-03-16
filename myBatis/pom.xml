@@ -10,8 +10,8 @@
 
     <repositories>
         <repository>
-            <id>aliyun</id>
-            <name>aliyun</name>
+            <id>aliyah</id>
+            <name>aliyah</name>
             <url>https://maven.aliyun.com/repository/public</url>
         </repository>
     </repositories>
