@@ -1,0 +1,18 @@
+package com.imooc.test;
+
+/**
+ * 包装类
+ * 
+ * @author User
+ *
+ */
+public class Test {
+
+	public static void main(String[] args) {
+		Integer nInteger = 15;
+		System.out.println(nInteger);
+		String intString = "12";
+//		包装类与字符串之间的转换
+	}
+
+}

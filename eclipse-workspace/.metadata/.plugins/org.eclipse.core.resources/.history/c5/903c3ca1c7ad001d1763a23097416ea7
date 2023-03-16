@@ -1,0 +1,42 @@
+package com.imooc.test;
+
+import java.io.UnsupportedEncodingException;
+
+/**
+ * 包装类
+ * 
+ * @author User
+ *
+ */
+public class Test {
+
+	public static void main(String[] args) throws UnsupportedEncodingException {
+
+//		包装类与字符串之间的转换
+		Integer nInteger = 15;
+		// 包装类转字符串
+		String intString = Integer.toString(nInteger);
+		System.out.println(intString);
+		// 字符串转包装类
+		Integer nInteger2 = Integer.parseInt(intString);
+		int n3 = Integer.valueOf(intString);
+		System.out.println(nInteger2);
+		String string = new String("java 编程");
+
+		byte[] by = string.getBytes("utf-8");
+
+		for (byte b : by) {
+			System.out.print(b + " ");
+		}
+		System.out.println();
+		string = new String(by, "utf-8");
+		System.out.println(string);
+		System.out.println("===================StringBuilder");
+		StringBuilder stringBuilder = new StringBuilder("你好");
+		stringBuilder.append(",imooc!");
+		System.out.println("append 方法的使用结果：" +stringBuilder);
+		System.out.println(StringBuilder);
+
+	}
+
+}

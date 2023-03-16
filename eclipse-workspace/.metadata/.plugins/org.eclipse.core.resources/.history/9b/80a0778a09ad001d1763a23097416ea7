@@ -1,0 +1,16 @@
+package com.imooc.test;
+
+/**
+ * 包装类
+ * 
+ * @author User
+ *
+ */
+public class Test {
+
+	public static void main(String[] args) {
+		Integer nInteger = new Integer(15);
+		System.out.println(nInteger * 14);
+	}
+
+}

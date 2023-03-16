@@ -1,0 +1,6 @@
+package com.imooc.animal;
+
+public interface Eat {
+	
+	default void eat(String food);
+}

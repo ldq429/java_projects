@@ -1,0 +1,9 @@
+package com.imooc.animal;
+
+public interface Eat {
+
+	
+	default void eat(String food) {
+		System.out.println("小猫爱吃鱼...");
+	};
+}
