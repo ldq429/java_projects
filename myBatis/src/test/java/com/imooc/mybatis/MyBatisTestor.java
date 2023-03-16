@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.sql.Connection;
 
 public class MyBatisTestor {
     @Test
@@ -33,6 +34,8 @@ public class MyBatisTestor {
         SqlSession sqlSession = null;
         try {
             sqlSession = MyBatisUtils.openSession();
+            Connection connection = sqlSession.getConnection();
+            System.out.println(connection);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
