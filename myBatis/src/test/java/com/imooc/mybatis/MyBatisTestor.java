@@ -1,5 +1,6 @@
 package com.imooc.mybatis;
 
+import com.imooc.mybatis.utils.MyBatisUtils;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -24,6 +25,18 @@ public class MyBatisTestor {
             throw new RuntimeException(e);
         } finally {
             if (sqlSession != null) sqlSession.close();
+        }
+    }
+
+    @Test
+    public void testMyBatisUtils(){
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = MyBatisUtils.openSession();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            MyBatisUtils.closeSession(sqlSession);
         }
     }
 }
