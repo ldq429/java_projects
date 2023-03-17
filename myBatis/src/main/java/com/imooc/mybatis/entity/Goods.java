@@ -8,7 +8,7 @@ public class Goods {
     private Float currentPrice;
     private Float discount;
     private Integer isFreeDelivery;
-    private Integer categoryID;
+    private Integer categoryId;
 
     public Integer getGoodsId() {
         return goodsId;
@@ -66,13 +66,10 @@ public class Goods {
         this.isFreeDelivery = isFreeDelivery;
     }
 
-    public Integer getCategoryID() {
-        return categoryID;
+    public Integer getCategoryId() {
+        return categoryId;
     }
-
-    public void setCategoryID(Integer categoryID) {
-        this.categoryID = categoryID;
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
-
-
 }

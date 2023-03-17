@@ -1,5 +1,6 @@
 package com.imooc.mybatis;
 
+import com.imooc.mybatis.dto.GoodsDTO;
 import com.imooc.mybatis.entity.Goods;
 import com.imooc.mybatis.utils.MyBatisUtils;
 import org.apache.ibatis.io.Resources;
@@ -102,6 +103,21 @@ public class MyBatisTestor {
         try {
             sqlSession = MyBatisUtils.openSession();
             List<java.util.Map> list = sqlSession.selectList("goods.queryCategoryName");
+            list.stream().forEach(good-> System.out.println(good));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            MyBatisUtils.closeSession(sqlSession);
+        }
+    }
+
+
+    @Test
+    public void queryGoodsDTO() {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = MyBatisUtils.openSession();
+            List<GoodsDTO> list = sqlSession.selectList("goods.queryGoodsDTO");
             list.stream().forEach(good-> System.out.println(good));
         } catch (Exception e) {
             throw new RuntimeException(e);

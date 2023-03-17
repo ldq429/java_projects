@@ -35,5 +35,30 @@
         limit 10
     </select>
 
+    <!--多表查询映射字段-->
+    <resultMap id="goodsDTO" type="com.imooc.mybatis.dto.GoodsDTO">
+        <id property="goods.goodsId" column="goods_id" />
+        <result property="goods.title" column="title"/>
+        <result property="goods.subTitle" column="sub_title"/>
+        <result property="goods.originalCost" column="original_cost"/>
+        <result property="goods.currentPrice" column="current_price"/>
+        <result property="goods.discount" column="discount"/>
+        <result property="goods.isFreeDelivery" column="is_free_delivery"/>
+        <result property="goods.categoryId" column="category_id"/>
+        <result property="category.categoryId" column="category_id"/>
+        <result property="category.categoryName" column="category_name"/>
+        <result property="category.parentId" column="parent_id"/>
+        <result property="category.categoryLevel" column="category_level"/>
+        <result property="category.categoryOrder" column="category_order"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+    <select id="queryGoodsDTO" resultMap="goodsDTO">
+        select g.*, c.*
+        from t_goods g,
+             t_category c
+        where g.category_id = c.category_id
+        limit 10
+    </select>
+
 
 </mapper>
