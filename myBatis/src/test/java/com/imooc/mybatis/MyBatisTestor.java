@@ -96,5 +96,17 @@ public class MyBatisTestor {
         }
     }
 
-
+    @Test
+    public void queryCategoryName() {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = MyBatisUtils.openSession();
+            List<java.util.Map> list = sqlSession.selectList("goods.queryCategoryName");
+            list.stream().forEach(good-> System.out.println(good));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            MyBatisUtils.closeSession(sqlSession);
+        }
+    }
 }

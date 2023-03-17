@@ -26,4 +26,14 @@
         limit #{limit};
     </select>
 
+    <!--多表查询-->
+    <select id="queryCategoryName" resultType="java.util.LinkedHashMap">
+        select g.*, c.category_name
+        from t_goods g,
+             t_category c
+        where g.category_id = c.category_id
+        limit 10
+    </select>
+
+
 </mapper>
