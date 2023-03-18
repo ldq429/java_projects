@@ -60,19 +60,32 @@
         limit 10
     </select>
     <!--回填主键id方式1-->
-<!--    <insert id="insert" parameterType="com.imooc.mybatis.entity.Goods">-->
-<!--        insert into t_goods(title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)-->
-<!--        values (#{title}, #{subTitle}, #{originalCost}, #{currentPrice}, #{discount}, #{isFreeDelivery}, #{categoryId});-->
-<!--        <selectKey resultType="Integer" keyProperty="goodsId" order="AFTER">-->
-<!--            select last_insert_id()-->
-<!--        </selectKey>-->
-<!--    </insert>-->
+    <!--    <insert id="insert" parameterType="com.imooc.mybatis.entity.Goods">-->
+    <!--        insert into t_goods(title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)-->
+    <!--        values (#{title}, #{subTitle}, #{originalCost}, #{currentPrice}, #{discount}, #{isFreeDelivery}, #{categoryId});-->
+    <!--        <selectKey resultType="Integer" keyProperty="goodsId" order="AFTER">-->
+    <!--            select last_insert_id()-->
+    <!--        </selectKey>-->
+    <!--    </insert>-->
 
-    <!--回填主键id方式2-->
-    <insert id="insert" parameterType="com.imooc.mybatis.entity.Goods" useGeneratedKeys="true" keyProperty="goodsId" keyColumn="goods_id">
+    <!--回填主键id方式2更建议使用该方式 useGeneratedKeys keyProperty keyColumn-->
+    <insert id="insert" parameterType="com.imooc.mybatis.entity.Goods" useGeneratedKeys="true" keyProperty="goodsId"
+            keyColumn="goods_id">
         insert into t_goods(title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)
         values (#{title}, #{subTitle}, #{originalCost}, #{currentPrice}, #{discount}, #{isFreeDelivery}, #{categoryId});
     </insert>
 
+    <!--更新操作-->
+    <update id="update" parameterType="com.imooc.mybatis.entity.Goods">
+        update t_goods
+        set title=#{title},
+            sub_title=#{subTitle},
+            original_cost=#{originalCost},
+            current_price=#{currentPrice},
+            discount=#{discount},
+            is_free_delivery=#{isFreeDelivery},
+            category_id=#{categoryId}
+        where goods_id = #{goodsId};
+    </update>
 
 </mapper>
