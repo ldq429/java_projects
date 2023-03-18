@@ -95,4 +95,20 @@
         where goods_id = #{value};
     </delete>
 
+
+    <!--动态sql,可用于动态的结果集查询，类似淘宝的筛选项等结果集进行查询-->
+    <select id="dynamic" parameterType="java.util.Map" resultType="com.imooc.mybatis.entity.Goods">
+        select * from t_goods
+        <where>
+            <if test="categoryId != null">
+                and category_id =
+                #{categoryId}
+            </if>
+            <if test="currentPrice != null">
+                and current_price  >
+                #{currentPrice}
+            </if>
+        </where>
+    </select>
+
 </mapper>

@@ -168,11 +168,31 @@ public class MyBatisTestor {
     }
 
     @Test
-    public void testDelete(){
+    public void testDelete() {
         SqlSession sqlSession = null;
         try {
             sqlSession = MyBatisUtils.openSession();
             int res = sqlSession.delete("goods.delete", 739);
+            sqlSession.commit();
+        } catch (Exception e) {
+            if (sqlSession != null) sqlSession.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            MyBatisUtils.closeSession(sqlSession);
+        }
+    }
+
+    @Test
+    public void testDynamic() {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = MyBatisUtils.openSession();
+            Map params = new HashMap<>();
+//            params.put("currentPrice", 10f);
+            params.put("categoryId", 44);
+            List<Goods> res = sqlSession.selectList("goods.dynamic", params);
+            System.out.println(res);
+            res.stream().forEach(g -> System.out.println(g.getTitle()));
             sqlSession.commit();
         } catch (Exception e) {
             if (sqlSession != null) sqlSession.rollback();
