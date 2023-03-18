@@ -166,4 +166,19 @@ public class MyBatisTestor {
             MyBatisUtils.closeSession(sqlSession);
         }
     }
+
+    @Test
+    public void testDelete(){
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = MyBatisUtils.openSession();
+            int res = sqlSession.delete("goods.delete", 739);
+            sqlSession.commit();
+        } catch (Exception e) {
+            if (sqlSession != null) sqlSession.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            MyBatisUtils.closeSession(sqlSession);
+        }
+    }
 }
