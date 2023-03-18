@@ -89,7 +89,7 @@ public class MyBatisTestor {
             params.put("max", 500);
             params.put("limit", 10);
             List<Goods> list = sqlSession.selectList("goods.queryByPriceRange", params);
-            list.stream().forEach(good-> System.out.println(good.getCurrentPrice()));
+            list.stream().forEach(good -> System.out.println(good.getCurrentPrice()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -103,7 +103,7 @@ public class MyBatisTestor {
         try {
             sqlSession = MyBatisUtils.openSession();
             List<java.util.Map> list = sqlSession.selectList("goods.queryCategoryName");
-            list.stream().forEach(good-> System.out.println(good));
+            list.stream().forEach(good -> System.out.println(good));
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -118,8 +118,32 @@ public class MyBatisTestor {
         try {
             sqlSession = MyBatisUtils.openSession();
             List<GoodsDTO> list = sqlSession.selectList("goods.queryGoodsDTO");
-            list.stream().forEach(good-> System.out.println(good));
+            list.stream().forEach(good -> System.out.println(good));
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            MyBatisUtils.closeSession(sqlSession);
+        }
+    }
+
+    @Test
+    public void testInsert() {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = MyBatisUtils.openSession();
+            Goods goods = new Goods();
+            goods.setTitle("测试商品");
+            goods.setSubTitle("测试子标题");
+            goods.setOriginalCost(200f);
+            goods.setCurrentPrice(100f);
+            goods.setDiscount(0.5f);
+            goods.setIsFreeDelivery(1);
+            goods.setCategoryId(43);
+            int res = sqlSession.insert("goods.insert", goods);
+            sqlSession.commit();
+            System.out.println(goods.getGoodsId());
+        } catch (Exception e) {
+            if (sqlSession != null) sqlSession.rollback();
             throw new RuntimeException(e);
         } finally {
             MyBatisUtils.closeSession(sqlSession);

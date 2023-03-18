@@ -60,5 +60,14 @@
         limit 10
     </select>
 
+    <insert id="insert" parameterType="com.imooc.mybatis.entity.Goods">
+        insert into t_goods(title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)
+        values (#{title}, #{subTitle}, #{originalCost}, #{currentPrice}, #{discount}, #{isFreeDelivery}, #{categoryId});
+        <selectKey resultType="Integer" keyProperty="goodsId" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+
 
 </mapper>
