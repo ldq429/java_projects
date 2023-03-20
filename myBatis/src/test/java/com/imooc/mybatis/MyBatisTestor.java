@@ -1,5 +1,8 @@
 package com.imooc.mybatis;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.imooc.mybatis.dto.GoodsDTO;
 import com.imooc.mybatis.entity.Goods;
 import com.imooc.mybatis.utils.MyBatisUtils;
@@ -209,6 +212,24 @@ public class MyBatisTestor {
             sqlSession = MyBatisUtils.openSession();
             List<Goods> res = sqlSession.selectList("goods.selectOneTOMany", 1694);
             System.out.println(res);
+            sqlSession.commit();
+        } catch (Exception e) {
+            if (sqlSession != null) sqlSession.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            MyBatisUtils.closeSession(sqlSession);
+        }
+    }
+
+    @Test
+    public void testPageHelper() {
+        SqlSession sqlSession = null;
+        try {
+            sqlSession = MyBatisUtils.openSession();
+            PageHelper.startPage(1, 10);
+            List<Goods> list =  sqlSession.selectList("goods.queryByPage");
+            PageInfo pageInfo = new PageInfo(list);
+            System.out.println(pageInfo.toString());
             sqlSession.commit();
         } catch (Exception e) {
             if (sqlSession != null) sqlSession.rollback();
