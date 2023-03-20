@@ -39,6 +39,7 @@
     </environments>
     <!--加载mappers-->
     <mappers>
-        <mapper resource="mappers/goods.xml"></mapper>
+        <mapper resource="mappers/goods.xml" />
+        <mapper resource="mappers/goodsDetail.xml" />
     </mappers>
 </configuration>

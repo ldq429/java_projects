@@ -4,6 +4,35 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace类似包，用于区分sql的名称-->
 <mapper namespace="goods">
+    <!--开启二级缓存，二级缓存是对应的当前命名空间进行的，
+    eviction：缓存清除策略，当缓存对象数量达到上限，自动出发对应的算法对缓存进行清除
+            1. LRU：最近最久未使用->移除最长时间未被使用的对象   建议使用✅缓存命中率最高
+            2. FIFO：先进先出
+            3. SOFT：软引用->移除基于垃圾收集器状态和软引用规格的对象
+            4. WEAK：弱引用->更积极的移除基于垃圾收集器状态和弱引用规则的对象
+    flushInterval：清除缓存时间间隔，单位为毫秒 600000 = 10分钟，3600000 = 1小时
+    size：缓存存储上限，用于保存对象或集合(一个集合或者对象为size位1)，建议单条数据使用缓存。多条数据不建议使用缓存，
+    readOnly
+        true -> 每次从缓存中取出的是缓存对象本身，这种执行效率高
+        false -> 每次从缓存中取出缓存的副本，每一次取出的对象都是不同的，安全性较高
+
+    useCache是否使用缓存也可以在具体标签中进行设置，返回的是10条数据不建议使用缓存如下：
+    <select id="queryAll" resultType="com.imooc.mybatis.entity.Goods" useCache="false">
+        select *
+        from t_goods
+        order by goods_id desc
+        limit 10;
+    </select>
+
+    flushCache，当前sql执行之后强制清空缓存，当前结果不会被放入到缓存中：
+    <select id="queryAll" resultType="com.imooc.mybatis.entity.Goods" flushCache="false">
+        select *
+        from t_goods
+        order by goods_id desc
+        limit 10;
+    </select>
+    -->
+    <cache eviction="LRU" flushInterval="600000" size="512" readOnly="ture"/>
     <select id="queryAll" resultType="com.imooc.mybatis.entity.Goods">
         select *
         from t_goods
@@ -79,12 +108,12 @@
     <update id="update" parameterType="com.imooc.mybatis.entity.Goods">
         update t_goods
         set title=#{title},
-            sub_title=#{subTitle},
-            original_cost=#{originalCost},
-            current_price=#{currentPrice},
-            discount=#{discount},
-            is_free_delivery=#{isFreeDelivery},
-            category_id=#{categoryId}
+        sub_title=#{subTitle},
+        original_cost=#{originalCost},
+        current_price=#{currentPrice},
+        discount=#{discount},
+        is_free_delivery=#{isFreeDelivery},
+        category_id=#{categoryId}
         where goods_id = #{goodsId};
     </update>
 
@@ -105,10 +134,28 @@
                 #{categoryId}
             </if>
             <if test="currentPrice != null">
-                and current_price  >
+                and current_price >
                 #{currentPrice}
             </if>
         </where>
+    </select>
+
+
+    <!--1对多关联查询-->
+    <resultMap id="selectOneTOManyRes" type="com.imooc.mybatis.entity.Goods">
+        <!--column 对应数据库字段，property对应实体类字段-->
+        <id column="goods_id" property="goodsId"/>
+        <!--
+        property： Goods实体类的goodsDetails 属性
+        select：对应GoodsDetail的mapper中根据id差详情
+        column：关联列
+        -->
+        <collection property="goodsDetails" select="goodsDetail.selectByGoodsId" column="goods_id"/>
+    </resultMap>
+    <select id="selectOneTOMany" resultMap="selectOneTOManyRes">
+        select *
+        from t_goods
+        limit 0,1
     </select>
 
 </mapper>

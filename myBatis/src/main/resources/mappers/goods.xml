@@ -108,12 +108,12 @@
     <update id="update" parameterType="com.imooc.mybatis.entity.Goods">
         update t_goods
         set title=#{title},
-            sub_title=#{subTitle},
-            original_cost=#{originalCost},
-            current_price=#{currentPrice},
-            discount=#{discount},
-            is_free_delivery=#{isFreeDelivery},
-            category_id=#{categoryId}
+        sub_title=#{subTitle},
+        original_cost=#{originalCost},
+        current_price=#{currentPrice},
+        discount=#{discount},
+        is_free_delivery=#{isFreeDelivery},
+        category_id=#{categoryId}
         where goods_id = #{goodsId};
     </update>
 
@@ -134,10 +134,28 @@
                 #{categoryId}
             </if>
             <if test="currentPrice != null">
-                and current_price  >
+                and current_price >
                 #{currentPrice}
             </if>
         </where>
+    </select>
+
+
+    <!--1对多关联查询-->
+    <resultMap id="selectOneTOManyRes" type="com.imooc.mybatis.entity.Goods">
+        <!--column 对应数据库字段，property对应实体类字段-->
+        <id column="goods_id" property="goodsId"/>
+        <!--
+        property： Goods实体类的goodsDetails 属性
+        select：对应GoodsDetail的mapper中根据id差详情
+        column：关联列
+        -->
+        <collection property="goodsDetails" select="goodsDetail.selectByGoodsId" column="goods_id"/>
+    </resultMap>
+    <select id="selectOneTOMany" resultMap="selectOneTOManyRes">
+        select *
+        from t_goods
+        limit 0,1
     </select>
 
 </mapper>
