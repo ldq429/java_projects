@@ -32,7 +32,7 @@
         limit 10;
     </select>
     -->
-    <cache eviction="LRU" flushInterval="600000" size="512" readOnly="ture"/>
+<!--    <cache eviction="LRU" flushInterval="600000" size="512" readOnly="ture"/>-->
     <select id="queryAll" resultType="com.imooc.mybatis.entity.Goods">
         select *
         from t_goods
