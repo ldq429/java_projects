@@ -158,10 +158,31 @@
         limit 0,1
     </select>
 
-    <!--pagehelper-->
+    <!--pagehelper插件使用-->
     <select id="queryByPage" resultType="com.imooc.mybatis.entity.Goods">
         select *
         from t_goods
     </select>
+
+    <!--myBatis 批量插入示例-->
+    <insert id="batchInsert" parameterType="com.imooc.mybatis.entity.Goods">
+        insert into t_goods(title, sub_title, original_cost, current_price, discount, is_free_delivery, category_id)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.title},#{item.subTitle},#{item.originalCost},#{item.currentPrice},#{item.discount},#{item.isFreeDelivery},#{item.categoryId})
+        </foreach>
+    </insert>
+    <!--myBatis 批量删除示例 in(1902, 1908)  open,close与之对应   -->
+    <delete id="banchDelete" parameterType="java.util.List">
+        delete
+        from t_goods
+        where goods_id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+
+
 
 </mapper>
