@@ -1,4 +1,4 @@
-package com.imooc.sertlet;
+package com.imooc.sertlet.forword;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
