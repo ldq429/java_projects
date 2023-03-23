@@ -3,12 +3,38 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <welcome-file-list>
+        <!--默认首页-->
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <!--初始化加载配置信息顺序 load-on-startup  依次序从小到大-->
     <servlet>
-        <servlet-name>first</servlet-name>
-        <servlet-class>com.imooc.sertlet.FristServlet</servlet-class>
+        <servlet-name>import</servlet-name>
+        <servlet-class>com.imooc.sertlet.servletConfig.ServletImport</servlet-class>
+        <init-param>
+            <param-name>datebase</param-name>
+            <param-value>db1</param-value>
+        </init-param>
+        <load-on-startup>0</load-on-startup>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>first</servlet-name>
-        <url-pattern>/hi</url-pattern>
-    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>init</servlet-name>
+        <servlet-class>com.imooc.sertlet.servletConfig.ServletInit</servlet-class>
+        <init-param>
+            <param-name>file</param-name>
+            <param-value>c:/temp/demo.txt</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!--404 | 500 配置页面-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/500.html</location>
+    </error-page>
 </web-app>
